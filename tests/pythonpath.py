@@ -7,7 +7,7 @@
 
 from os.path import dirname, join, pardir
 from sys import path as pythonpath
-pythonpath[:0] = join(dirname(__file__), pardir, 'impl'),
+pythonpath[:0] = join(dirname(__file__), pardir),
 
 if __name__ == '__main__':
     raise Exception('making a module executable is a bad habit.')

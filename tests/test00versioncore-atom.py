@@ -11,7 +11,7 @@ from unittest import TestCase, TestProgram
 
 from transitivity import cmp_abc, cmp_abc_expected, transitivity
 import pythonpath
-from versioncore import IntegralVersionAtom as A,\
+from versionutil.versioncore import IntegralVersionAtom as A,\
     MinimumVersionAtom as Min, MaximumVersionAtom as Max
 
 class T0Sanity(TestCase):

@@ -11,7 +11,7 @@ from unittest import TestCase, TestProgram
 
 from transitivity import cmp_abc, cmp_abc_expected, transitivity
 import pythonpath
-from versioncore import VersionAtomSequence as S,\
+from versionutil.versioncore import VersionAtomSequence as S,\
     MinimumVersionAtom as Min, MaximumVersionAtom as Max
 
 data0 = r'''

@@ -12,7 +12,7 @@ from unittest import TestCase, TestProgram
 from transitivity import cmp_abc, cmp_abc_expected, transitivity
 from versionstrings import a, b, c, versionstrings
 import pythonpath
-from typicalversion import TypicalVersion as V
+from versionutil.typicalversion import TypicalVersion as V
 
 class T(TestCase):
     def test00(self):

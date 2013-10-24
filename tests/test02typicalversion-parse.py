@@ -10,7 +10,7 @@
 from unittest import TestCase, TestProgram
 
 import pythonpath
-from typicalversion import typical_version, TypicalVersion
+from versionutil.typicalversion import typical_version, TypicalVersion
 
 expected0 = r'''
 (?P<version>\d+(?:\.\d+)*)
