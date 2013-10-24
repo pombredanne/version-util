@@ -51,6 +51,10 @@ class T1Cmp(TestCase):
     def test01(self):
         data = ('01',), ('010',), ('02',), (1,), (1, 1)
         self.assertTrue(transitivity(S(s) for s in data))
+    def test02(self):
+        expected = cmp_abc_expected
+        got = cmp_abc(S(('01',)), S(('010',)), S.null)
+        self.assertEquals(expected, got)
 
 if __name__ == '__main__':
     TestProgram()

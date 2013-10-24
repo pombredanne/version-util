@@ -21,6 +21,8 @@ class T(TestCase):
         self.assertEquals(expected, got)
     def test01(self):
         self.assertTrue(transitivity(V(s) for s in versionstrings))
+    def test02anon_is_latest(self):
+        self.assertLess(V('jdk8.0'), V('jdk'))
 
 if __name__ == '__main__':
     TestProgram()
