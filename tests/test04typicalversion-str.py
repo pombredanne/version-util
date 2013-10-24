@@ -11,9 +11,9 @@ from unittest import TestCase, TestProgram
 
 from versionstrings import versionstrings
 import pythonpath
-from typicalversion import TypicalVersion as V
+from versionutil.typicalversion import TypicalVersion as V
 
-class T0Str(TestCase):
+class T(TestCase):
     def test00str(self):
         expected = versionstrings
         got = tuple(str(V(s)) for s in versionstrings)

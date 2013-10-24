@@ -25,7 +25,12 @@ class VersionAtomSequence(object):
         values = ', '.join(repr(to_repr(atom)) for atom in self.values)
         return '{}({})'.format(self.__class__.__name__, values)
     def __cmp__(self, other):
-        return cmp(self.values, other.values)
+        x, y = self.values, other.values
+        if len(x) == 0:
+            return 0 if len(y) == 0 else 1
+        elif len(y) == 0:
+            return -1
+        return cmp(x, y)
     def stringify(self, sep=None):
         rv = (str(a) for a in self.values)
         return sep.join(rv) if sep else sep

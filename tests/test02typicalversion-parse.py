@@ -10,7 +10,7 @@
 from unittest import TestCase, TestProgram
 
 import pythonpath
-from typicalversion import typical_version, TypicalVersion
+from versionutil.typicalversion import typical_version, TypicalVersion
 
 expected0 = r'''
 (?P<version>\d+(?:\.\d+)*)
@@ -51,9 +51,9 @@ class T1Match(TestCase):
         got = typical_version(str)
         self.assertEquals(expected, got)
     def test05(self):
-        str = '1.2.3rc4.post01.dev02'
-        expected = expect(version='1.2.3', prerel='rc', prerelversion='4',
-            post='01', dev='02',
+        str = '1.2.3rc4.5.post06.dev07'
+        expected = expect(version='1.2.3', prerel='rc', prerelversion='4.5',
+            post='06', dev='07',
         )
         got = typical_version(str)
         self.assertEquals(expected, got)

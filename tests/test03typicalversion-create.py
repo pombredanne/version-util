@@ -10,8 +10,9 @@
 from unittest import TestCase, TestProgram
 
 import pythonpath
-from typicalversion import TypicalVersion as V
-from versioncore import MinimumVersionAtom as Min, MaximumVersionAtom as Max,\
+from versionutil.typicalversion import TypicalVersion as V
+from versionutil.versioncore import\
+    MinimumVersionAtom as Min, MaximumVersionAtom as Max,\
     VersionAtomSequence as S, VersionAtom as A
 
 class T(TestCase):
