@@ -9,23 +9,20 @@
 
 from unittest import TestCase, TestProgram
 
+from transitivity import cmp_abc, cmp_abc_expected, transitivity
+from versionstrings import a, b, c, versionstrings
 import pythonpath
-from versionutil.typicalversion import TypicalVersion as V
-from versionutil.versioncore import\
-    MinimumVersionAtom as Min, MaximumVersionAtom as Max,\
-    VersionAtomSequence as S, VersionAtom as A
+from versionutil.typical import TypicalVersion as V
 
 class T(TestCase):
     def test00(self):
-        expected = S.null, (Max.s, S.null), (Min.s, Max.s)
-        v = V('')
-        got = v.version, v.prerel, v.postdev
+        expected = cmp_abc_expected
+        got = cmp_abc(V(a), V(b), V(c))
         self.assertEquals(expected, got)
     def test01(self):
-        expected = S((0, 1, 2)), (A('a'), S(('03', 4))), (A(5), A('06'))
-        v = V('0.1.2a03.4.post5.dev06')
-        got = v.version, v.prerel, v.postdev
-        self.assertEquals(expected, got)
+        self.assertTrue(transitivity(V(s) for s in versionstrings))
+    def test02anon_is_latest(self):
+        self.assertLess(V('jdk8.0'), V('jdk'))
 
 if __name__ == '__main__':
     TestProgram()
