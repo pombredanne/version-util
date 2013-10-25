@@ -11,7 +11,7 @@ from unittest import TestCase, TestProgram
 
 from versionstrings import versionstrings
 import pythonpath
-from versionutil.typicalversion import TypicalVersion as V
+from versionutil.typical import TypicalVersion as V
 
 class T(TestCase):
     def test00str(self):

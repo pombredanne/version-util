@@ -8,15 +8,15 @@
 # This file is offered as-is, without any warranty.
 
 # installation:
-# $ sudo mkdir /tmp/x19290
-# $ sudo cp -a impl/. /tmp/x19290/.
+# $ sudo mkdir --parent /opt/lib/x19290/py
+# $ sudo cp --archive $PWD /opt/lib/x19290/py/
 # $ python README.py
 
 # see https://wiki.python.org/moin/Distutils/VersionComparison
 r'''
 >>> from sys import path as pythonpath
->>> pythonpath[:0] = '/tmp/x19290',
->>> from typicalversion import TypicalVersion as V
+>>> pythonpath[:0] = '/opt/lib/x19290/py/version-util',
+>>> from versionutil.typical import TypicalVersion as V
 >>> (V('1.0a1')
 ...  < V('1.0a2.dev456')
 ...  < V('1.0a2')

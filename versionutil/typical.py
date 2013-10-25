@@ -5,7 +5,7 @@
 # the copyright notice and this notice are preserved.
 # This file is offered as-is, without any warranty.
 
-from versioncore import VersionAtomSequence as S, VersionAtom as A,\
+from core import VersionAtomSequence as S, VersionAtom as A,\
     MinimumVersionAtom as Min, MaximumVersionAtom as Max, _Infinity
 from cStringIO import StringIO
 from re import compile as regex, VERBOSE
