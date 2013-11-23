@@ -9,6 +9,7 @@ from numbers import Integral
 
 #class VersionAtomSequence(tuple): may be impossible
 class VersionAtomSequence(object):
+    null = None
     def __init__(self, iterable):
         def atom(value):
             if isinstance(value, _Infinity):
@@ -49,14 +50,13 @@ class VersionAtom(object):
             return -cmp(other, self)
         compat = isinstance(other, self.__class__)
         return cmp(self.value, other.value) if compat else -1
-    def __str__(self):
-        return self.value
 
 class _Infinity(VersionAtom):
     def __repr__(self):
         return self.__class__.__name__ + '.s'
 
 class MinimumVersionAtom(_Infinity):
+    s = None
     def __init__(self):
         super(MinimumVersionAtom, self).__init__('')
     def __cmp__(self, other):
@@ -64,6 +64,7 @@ class MinimumVersionAtom(_Infinity):
 MinimumVersionAtom.s = MinimumVersionAtom()
 
 class MaximumVersionAtom(_Infinity):
+    s = None
     def __init__(self):
         super(MaximumVersionAtom, self).__init__('INFINITY')
     def __cmp__(self, other):

@@ -11,6 +11,7 @@ from unittest import TestCase, TestProgram
 
 from transitivity import cmp_abc, cmp_abc_expected, transitivity
 import pythonpath
+pythonpath # to avoid `Unused import` warning
 from versionutil.core import IntegralVersionAtom as A,\
     MinimumVersionAtom as Min, MaximumVersionAtom as Max
 
