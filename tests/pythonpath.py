@@ -7,7 +7,11 @@
 
 from os.path import dirname, join, pardir
 from sys import path as pythonpath
-pythonpath[:0] = join(dirname(__file__), pardir),
+def _prepend():
+    upper = join(dirname(__file__), pardir)
+    top = join(upper, pardir)
+    return upper, join(top, 'testutil-19290'), join(top, 'wheels-19290')
+pythonpath[:0] = _prepend()
 
 if __name__ == '__main__':
     raise Exception('making a module executable is a bad habit.')

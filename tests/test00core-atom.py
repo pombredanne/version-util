@@ -23,21 +23,21 @@ class T1Create(TestCase):
     def test00accept_int(self):
         expected = '1', '23'
         got = tuple(A(int(s)).value for s in expected)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01leading_zeroes(self):
         expected = '010'
         got = A('010').value
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
 
 class T2StrRepr(TestCase):
     def test00str00normal(self):
         expected = '1', '23', '010'
         got = tuple(str(A(s)) for s in expected)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test00str01inf(self):
         expected = '', 'INFINITY'
         got = tuple(str(a) for a in (Min.s, Max.s))
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01repr00normal(self):
         expected = (
             "IntegralVersionAtom('1')",
@@ -45,17 +45,17 @@ class T2StrRepr(TestCase):
             "IntegralVersionAtom('010')",
         )
         got = tuple(repr(A(s)) for s in ('1', '23', '010'))
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01repr01inf(self):
         expected = 'MinimumVersionAtom.s', 'MaximumVersionAtom.s'
         got = tuple(repr(a) for a in (Min.s, Max.s))
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
 
 class T3Cmp(TestCase):
     def test00(self):
         expected = cmp_abc_expected
         got = cmp_abc(A('01'), A(2), A(10))
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01(self):
         data = (
             Min.s,

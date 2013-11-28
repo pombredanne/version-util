@@ -20,12 +20,12 @@ class T(TestCase):
         expected = S.null, (Max.s, S.null), (Min.s, Max.s)
         v = V('')
         got = v.version, v.prerel, v.postdev
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01(self):
         expected = S((0, 1, 2)), (A('a'), S(('03', 4))), (A(5), A('06'))
         v = V('0.1.2a03.4.post5.dev06')
         got = v.version, v.prerel, v.postdev
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
 
 if __name__ == '__main__':
     TestProgram()

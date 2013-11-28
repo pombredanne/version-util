@@ -7,7 +7,11 @@
 
 from versionutil.core import VersionAtomSequence as S, VersionAtom as A,\
     MinimumVersionAtom as Min, MaximumVersionAtom as Max, _Infinity
-from cStringIO import StringIO
+from wheels19290 import python_major_version
+if python_major_version <= 2:
+    from cStringIO import StringIO
+else:
+    from io import StringIO
 from re import compile as regex, VERBOSE
 
 def _re():
@@ -55,10 +59,30 @@ class TypicalVersion(object):
         return b.getvalue()
     def __repr__(self):
         return '{}({})'.format(self.__class__.__name__, repr(str(self)))
-    def __cmp__(self, other):
+    def __lt__(self, other):
         x = self.version, self.prerel, self.postdev
         y = other.version, other.prerel, other.postdev
-        return cmp(x, y)
+        return x < y
+    def __le__(self, other):
+        x = self.version, self.prerel, self.postdev
+        y = other.version, other.prerel, other.postdev
+        return x <= y
+    def __gt__(self, other):
+        x = self.version, self.prerel, self.postdev
+        y = other.version, other.prerel, other.postdev
+        return x > y
+    def __ge__(self, other):
+        x = self.version, self.prerel, self.postdev
+        y = other.version, other.prerel, other.postdev
+        return x >= y
+    def __ne__(self, other):
+        x = self.version, self.prerel, self.postdev
+        y = other.version, other.prerel, other.postdev
+        return not x == y
+    def __eg__(self, other):
+        x = self.version, self.prerel, self.postdev
+        y = other.version, other.prerel, other.postdev
+        return x == y
 
 def typical_version(versin_string):
     rv = dict(version='', prerel='', prerelversion='', post='', dev='')
@@ -66,7 +90,9 @@ def typical_version(versin_string):
     if not m:
         return rv
     # rv.update(...) does not work well
-    for k, v in m.groupdict().iteritems():
+    d = m.groupdict()
+    bound_method = d.iteritems if python_major_version <= 2 else d.items
+    for k, v in bound_method():
         if v == None:
             continue
         rv[k] = v

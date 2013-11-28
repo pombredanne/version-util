@@ -21,16 +21,17 @@ cmp_abc_expected = (
 def transitivity(data):
     data = tuple(combinations(data, 2))
     l = len(data)
-    got = (
-        tuple(x < y for x, y in data),
-        tuple(x != y for x, y in data),
-        tuple(x == y for x, y in data),
-        tuple(x > y for x, y in data),
-        tuple(y < x for x, y in data),
-        tuple(y != x for x, y in data),
-        tuple(y == x for x, y in data),
-        tuple(y > x for x, y in data),
-    )
+#     x, y = data[32]
+#     z = y < x
+    a = tuple(x < y for (x, y) in data)
+    b = tuple(x != y for (x, y) in data)
+    c = tuple(x == y for (x, y) in data)
+    d = tuple(x > y for (x, y) in data)
+    e = tuple(y < x for (x, y) in data)
+    f = tuple(y != x for (x, y) in data)
+    g = tuple(y == x for (x, y) in data)
+    h = tuple(y > x for (x, y) in data)
+    got = (a, b, c, d, e, f, g, h)
     expected = (
         (True,) * l, (True,) * l, (False,) * l, (False,) * l,
         (False,) * l, (True,) * l, (False,) * l, (True,) * l,

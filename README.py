@@ -9,7 +9,7 @@
 
 # installation:
 # $ sudo mkdir --parent /opt/lib/x19290/py
-# $ sudo cp --archive $PWD /opt/lib/x19290/py/
+# $ sudo cp --recursive $PWD /opt/lib/x19290/py/
 # $ python README.py
 
 # see https://wiki.python.org/moin/Distutils/VersionComparison

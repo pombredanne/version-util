@@ -22,46 +22,46 @@ class T0Re(TestCase):
     def test(self):
         expected = expected0
         got = TypicalVersion.re
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
 
 class T1Match(TestCase):
     def test00(self):
         str = 'a1b'
         expected = expect(version='1')
         got = typical_version(str)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01(self):
         str = '1a'
         expected = expect(version='1')
         got = typical_version(str)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test02(self):
         str = '1.2b'
         expected = expect(version='1.2')
         got = typical_version(str)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test03(self):
         str = '1.2.3c'
         expected = expect(version='1.2.3')
         got = typical_version(str)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test04(self):
         str = '1.2.3c4'
         expected = expect(version='1.2.3', prerel='c', prerelversion='4')
         got = typical_version(str)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test05(self):
         str = '1.2.3rc4.5.post06.dev07'
         expected = expect(version='1.2.3', prerel='rc', prerelversion='4.5',
             post='06', dev='07',
         )
         got = typical_version(str)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test06(self):
         str = ''
         expected = expect()
         got = typical_version(str)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
 
 def expect(**kwargs):
     rv = dict(version='', prerel='', prerelversion='', post='', dev='')

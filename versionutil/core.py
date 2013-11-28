@@ -6,6 +6,9 @@
 # This file is offered as-is, without any warranty.
 
 from numbers import Integral
+from wheels19290 import python_major_version
+if 3 <= python_major_version:
+    from wheels19290 import cmp
 
 #class VersionAtomSequence(tuple): may be impossible
 class VersionAtomSequence(object):
@@ -25,13 +28,38 @@ class VersionAtomSequence(object):
             return atom if isinstance(atom, _Infinity) else str(atom)
         values = ', '.join(repr(to_repr(atom)) for atom in self.values)
         return '{}({})'.format(self.__class__.__name__, values)
-    def __cmp__(self, other):
+    def __lt__(self, other):
         x, y = self.values, other.values
-        if len(x) == 0:
-            return 0 if len(y) == 0 else 1
-        elif len(y) == 0:
-            return -1
-        return cmp(x, y)
+        if not x:
+            return False
+        if not y:
+            return True
+        return x < y
+    def __le__(self, other):
+        x, y = self.values, other.values
+        if not x:
+            return not y
+        if not y:
+            return True
+        return x <= y
+    def __gt__(self, other):
+        x, y = self.values, other.values
+        if not x:
+            return y
+        if not y:
+            return False
+        return x > y
+    def __ge__(self, other):
+        x, y = self.values, other.values
+        if not x:
+            return True
+        if not y:
+            return False
+        return x >= y
+    def __ne__(self, other):
+        return not self == other
+    def __eq__(self, other):
+        return type(self) == type(other) and self.values == other.values
     def stringify(self, sep=None):
         rv = (str(a) for a in self.values)
         return sep.join(rv) if sep else sep
@@ -44,31 +72,66 @@ class VersionAtom(object):
         return self.value
     def __repr__(self):
         return '{}({})'.format(self.__class__.__name__, repr(str(self)))
-    def __cmp__(self, other):
-        # TODO: clarify
+    # TODO: clarify
+    def __lt__(self, other):
         if isinstance(other, _Infinity):
-            return -cmp(other, self)
+            return other > self
         compat = isinstance(other, self.__class__)
-        return cmp(self.value, other.value) if compat else -1
+        return self.value < other.value if compat else True
+    def __le__(self, other):
+        if isinstance(other, _Infinity):
+            return other >= self
+        compat = isinstance(other, self.__class__)
+        return self.value <= other.value if compat else True
+    def __gt__(self, other):
+        if isinstance(other, _Infinity):
+            return other < self
+        compat = isinstance(other, self.__class__)
+        return self.value > other.value if compat else False
+    def __ge__(self, other):
+        if isinstance(other, _Infinity):
+            return other <= self
+        compat = isinstance(other, self.__class__)
+        return self.value >= other.value if compat else False
+    def __ne__(self, other):
+        return not self == other    
+    def __eq__(self, other):
+        return type(self) == type(other) and self.value == other.value
 
 class _Infinity(VersionAtom):
     def __repr__(self):
         return self.__class__.__name__ + '.s'
+    def __ne__(self, other):
+        return not self == other
+    def __eq__(self, other):
+        return type(self) == type(other)
 
 class MinimumVersionAtom(_Infinity):
     s = None
     def __init__(self):
         super(MinimumVersionAtom, self).__init__('')
-    def __cmp__(self, other):
-        return 0 if type(self) == type(other) else -1
+    def __lt__(self, other):
+        return self != other
+    def __le__(self, other):
+        return True
+    def __gt__(self, other):
+        return False
+    def __ge__(self, other):
+        return self == other
 MinimumVersionAtom.s = MinimumVersionAtom()
 
 class MaximumVersionAtom(_Infinity):
     s = None
     def __init__(self):
         super(MaximumVersionAtom, self).__init__('INFINITY')
-    def __cmp__(self, other):
-        return 0 if type(self) == type(other) else 1
+    def __lt__(self, other):
+        return False
+    def __le__(self, other):
+        return self == other
+    def __gt__(self, other):
+        return self != other
+    def __ge__(self, other):
+        return True
 MaximumVersionAtom.s = MaximumVersionAtom()
 
 class IntegralVersionAtom(VersionAtom):
@@ -79,13 +142,35 @@ class IntegralVersionAtom(VersionAtom):
             int(value) # or ValueError
             value = str(value)
         super(IntegralVersionAtom, self).__init__(value)
-    def __cmp__(self, other):
+    def __lt__(self, other):
         if isinstance(other, _Infinity):
-            return -cmp(other, self)
-        x, y = self.value, other.value
-        if x[0] != '0' and y[0] != '0':
-            x, y = int(x), int(y)
-        return cmp(x, y)
+            return other > self
+        if not isinstance(other, self.__class__):
+            return True
+        return _int_cmp(self.value, other.value) < 0
+    def __le__(self, other):
+        if isinstance(other, _Infinity):
+            return other >= self
+        if not isinstance(other, self.__class__):
+            return True
+        return _int_cmp(self.value, other.value) <= 0
+    def __gt__(self, other):
+        if isinstance(other, _Infinity):
+            return other < self
+        if not isinstance(other, self.__class__):
+            return False
+        return 0 < _int_cmp(self.value, other.value)
+    def __ge__(self, other):
+        if isinstance(other, _Infinity):
+            return other <= self
+        if not isinstance(other, self.__class__):
+            return False
+        return 0 <= _int_cmp(self.value, other.value)
+
+def _int_cmp(x, y):
+    if not (x.startswith('0') or y.startswith('0')):
+        x, y = int(x), int(y)
+    return cmp(x, y)
 
 if __name__ == '__main__':
     raise Exception('making a module executable is a bad habit.')

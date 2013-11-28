@@ -18,7 +18,7 @@ class T(TestCase):
     def test00(self):
         expected = cmp_abc_expected
         got = cmp_abc(V(a), V(b), V(c))
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01(self):
         self.assertTrue(transitivity(V(s) for s in versionstrings))
     def test02anon_is_latest(self):

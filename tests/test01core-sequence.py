@@ -32,7 +32,7 @@ class T0Repr(TestCase):
             ')'
         )
         got = repr(S((Min.s, Max.s)))
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01(self):
         data = tuple(s.split(',') for s in data0)
         his_name = S.__name__
@@ -41,20 +41,20 @@ class T0Repr(TestCase):
             for s in data
         )
         got = tuple(repr(S(s)) for s in data)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
 
 class T1Cmp(TestCase):
     def test00(self):
         expected = cmp_abc_expected
         got = cmp_abc(S(('01',)), S(('010',)), S(('02',)))
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01(self):
         data = ('01',), ('010',), ('02',), (1,), (1, 1)
         self.assertTrue(transitivity(S(s) for s in data))
     def test02(self):
         expected = cmp_abc_expected
         got = cmp_abc(S(('01',)), S(('010',)), S.null)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
 
 if __name__ == '__main__':
     TestProgram()

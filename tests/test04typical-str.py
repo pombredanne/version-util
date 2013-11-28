@@ -17,13 +17,13 @@ class T(TestCase):
     def test00str(self):
         expected = versionstrings
         got = tuple(str(V(s)) for s in versionstrings)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
     def test01repr(self):
         expected = tuple(
             '{}({})'.format(V.__name__, repr(str(s))) for s in versionstrings
         )
         got = tuple(repr(V(s)) for s in versionstrings)
-        self.assertEquals(expected, got)
+        self.assertEqual(expected, got)
 
 if __name__ == '__main__':
     TestProgram()
